@@ -60,8 +60,7 @@ def scan_folder(folder: Path):
     :return: None
     """
     if not folder.exists():
-        logger.info(f'No folder "{folder}" in current directory')
-        return None
+        return False
     for file in folder.iterdir():
         if file.is_dir():
             if file.name not in EXCLUSION_SET:
@@ -70,7 +69,7 @@ def scan_folder(folder: Path):
             continue
         if file.is_file():
             pick_ext(file)
-    return None
+    return True
 
 
 def print_lst():
@@ -111,7 +110,7 @@ def print_lst():
         logger.info(f'FOLDERS:')
         for folder in FOLDERS:
             logger.info(f'\t{folder.name}')
-    logger.info()
+    print()
     if KNOWN_EXT:
         logger.info(f'Known extensions: {" ".join(set(KNOWN_EXT))}')
     if UNKNOWN_EXT:
